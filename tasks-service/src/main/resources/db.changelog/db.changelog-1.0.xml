@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  author="Vladislav Marchenko"  id="db.changelog-1.0.1">
+        <createTable tableName="task_dashboards">
+            <column  name="task_dashboard_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="name" type="character varying(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable  tableName="changes">
+            <column  name="change_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_dashboard_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_dashboard_id"
+                baseTableName="changes"
+                baseTableSchemaName="public"
+                constraintName="fk_changes_task_dashboards"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_dashboard_id"
+                referencedTableName="task_dashboards"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.2">
+        <createTable tableName="labels">
+            <column  name="label_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="text" type="character varying(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="color" type="character varying(8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_dashboard_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_dashboard_id"
+                baseTableName="labels"
+                baseTableSchemaName="public"
+                constraintName="fk_labels_task_dashboards"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_dashboard_id"
+                referencedTableName="task_dashboards"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.3">
+        <createTable tableName="task_lists">
+            <column  name="task_list_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="name" type="character varying(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_dashboard_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_dashboard_id"
+                baseTableName="task_lists"
+                baseTableSchemaName="public"
+                constraintName="fk_task_lists_task_dashboards"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_dashboard_id"
+                referencedTableName="task_dashboards"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.4">
+        <createTable tableName="task_dashboard_to_user_links">
+            <column  name="task_dashboard_to_user_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_dashboard_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_dashboard_id"
+                baseTableName="task_dashboard_to_user_links"
+                baseTableSchemaName="public"
+                constraintName="fk_task_dashboard_to_user_links_task_dashboards"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_dashboard_id"
+                referencedTableName="task_dashboards"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.5">
+        <createTable tableName="tasks">
+            <column  name="task_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_priority" type="character varying(7)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="task_status" type="character varying(14)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_list_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_list_id"
+                baseTableName="tasks"
+                baseTableSchemaName="public"
+                constraintName="fk_task_task_lists"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_list_id"
+                referencedTableName="task_lists"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.6">
+        <createTable tableName="task_to_user_links">
+            <column  name="task_to_user_link_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_id"
+                baseTableName="task_to_user_links"
+                baseTableSchemaName="public"
+                constraintName="fk_task_to_user_links_tasks"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_id"
+                referencedTableName="tasks"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.7">
+        <createTable tableName="label_to_task_links">
+            <column  name="label_to_task_link_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_id"
+                baseTableName="label_to_task_links"
+                baseTableSchemaName="public"
+                constraintName="fk_label_to_task_links_tasks"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_id"
+                referencedTableName="tasks"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+
+        <addForeignKeyConstraint
+                baseColumnNames="label_id"
+                baseTableName="label_to_task_links"
+                baseTableSchemaName="public"
+                constraintName="fk_label_to_task_links_labels"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="label_id"
+                referencedTableName="labels"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.8">
+        <createTable tableName="commentaries">
+            <column  name="commentary_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_id"
+                baseTableName="commentaries"
+                baseTableSchemaName="public"
+                constraintName="fk_commentaries_tasks"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_id"
+                referencedTableName="tasks"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.9">
+        <createTable tableName="checklists">
+            <column  name="checklist_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_id"
+                baseTableName="checklists"
+                baseTableSchemaName="public"
+                constraintName="fk_checklists_tasks"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_id"
+                referencedTableName="tasks"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.10">
+        <createTable tableName="task_attachments">
+            <column  name="task_attachment_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="task_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="link" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_id"
+                baseTableName="task_attachments"
+                baseTableSchemaName="public"
+                constraintName="fk_task_attachments_tasks"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="task_id"
+                referencedTableName="tasks"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.11">
+        <createTable tableName="commentary_attachments">
+            <column  name="commentary_attachment_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="commentary_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="link" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="commentary_id"
+                baseTableName="commentary_attachments"
+                baseTableSchemaName="public"
+                constraintName="fk_commentary_attachments_commentaries"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="commentary_id"
+                referencedTableName="commentaries"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.12">
+        <createTable tableName="checklist_items">
+            <column  name="checklist_item_id"  type="bigint"  autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column name="checklist_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_completed" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="checklist_id"
+                baseTableName="checklist_items"
+                baseTableSchemaName="public"
+                constraintName="fk_checklist_items_checklists"
+                deferrable="true"
+                initiallyDeferred="true"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="checklist_id"
+                referencedTableName="checklists"
+                referencedTableSchemaName="public"
+                validate="true"
+        />
+    </changeSet>
+
+    <changeSet author="Vladislav Marchenko" id="db.changelog-1.0.13">
+        <renameColumn
+                columnDataType="bigint"
+                newColumnName="creator_id"
+                oldColumnName="owner_id"
+                schemaName="public"
+                tableName="task_dashboards"
+        />
+    </changeSet>
+</databaseChangeLog>
