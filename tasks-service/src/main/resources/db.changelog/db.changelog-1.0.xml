@@ -415,4 +415,27 @@
                 tableName="task_dashboards"
         />
     </changeSet>
+
+    <changeSet author="Vladislav Marchenko" id="db.changelog-1.0.14">
+
+        <addColumn schemaName= "public"
+                   tableName="commentary_attachments">
+            <column name="header" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addColumn schemaName= "public"
+                   tableName="task_attachments">
+            <column name="header" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

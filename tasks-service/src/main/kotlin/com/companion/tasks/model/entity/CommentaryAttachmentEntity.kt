@@ -1,5 +1,6 @@
 package com.companion.tasks.model.entity
 
+import java.util.*
 import javax.persistence.*
 
 /**
@@ -18,4 +19,10 @@ class CommentaryAttachmentEntity {
 
     @Column(name = "link", columnDefinition = "text", nullable = false)
     var link : String? = null
+
+    @Column(name = "header", columnDefinition = "text", nullable = true)
+    var header : String? = null
+
+    @Column(name = "created_date", columnDefinition = "timestamp", nullable = false)
+    val createdDate : Date = Date()
 }

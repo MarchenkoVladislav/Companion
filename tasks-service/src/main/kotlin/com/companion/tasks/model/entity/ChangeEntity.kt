@@ -1,6 +1,5 @@
 package com.companion.tasks.model.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.*
 import javax.persistence.*
 
