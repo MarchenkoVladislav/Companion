@@ -1,21 +1,19 @@
 package com.companion.tasks.model.entity
 
-import javax.persistence.*
+import com.companion.common.model.entity.AbstractEntity
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 /**
  * @author Vladislav Marchenko
  */
 @Entity
 @Table(name = "label_to_task_links")
-class LabelToTaskLinkEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "label_to_task_link_id")
-    var labelToTaskLinkId : Long? = 0
+class LabelToTaskLinkEntity(
+        @Column(name = "label_id", nullable = false)
+        var labelId : Long? = null,
 
-    @Column(name = "label_id", nullable = false)
-    var labelId : Long? = null
-
-    @Column(name = "task_id", nullable = false)
-    var taskId : Long? = null
-}
+        @Column(name = "task_id", nullable = false)
+        var taskId : Long? = null
+) : AbstractEntity<Long>()

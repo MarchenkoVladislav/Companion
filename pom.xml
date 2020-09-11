@@ -24,5 +24,6 @@
 
     <modules>
         <module>tasks-service</module>
+        <module>common</module>
     </modules>
 </project>

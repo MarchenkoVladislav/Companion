@@ -1,29 +1,28 @@
 package com.companion.tasks.model.entity
 
+import com.companion.common.model.entity.AbstractEntity
 import java.util.*
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 /**
  * @author Vladislav Marchenko
  */
 @Entity
 @Table(name = "changes")
-class ChangeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "change_id")
-    var changeId : Long? = 0
+class ChangeEntity(
+        @Column(name = "text", columnDefinition = "text", nullable = false)
+        var text : String? = null,
 
-    @Column(name = "text", columnDefinition = "text", nullable = false)
-    var text : String? = null
+        @Column(name = "user_id", nullable = false)
+        var userId : Long? = null,
 
-    @Column(name = "user_id", nullable = false)
-    var userId : Long? = null
+        @Column(name = "task_dashboard_id", nullable = false)
+        var taskDashboardId : Long? = null,
 
-    @Column(name = "task_dashboard_id", nullable = false)
-    var taskDashboardId : Long? = null
+        @Column(name = "date", columnDefinition = "timestamp", nullable = false)
+        val date : Date = Date()
+) : AbstractEntity<Long>()
 
-    @Column(name = "date", columnDefinition = "timestamp", nullable = false)
-    var date : Date = Date()
 
-}

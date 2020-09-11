@@ -6,13 +6,13 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet  author="Vladislav Marchenko"  id="db.changelog-1.0.1">
         <createTable tableName="task_dashboards">
-            <column  name="task_dashboard_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="name" type="character varying(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="owner_id" type="bigint">
+            <column name="creator_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="created_date" type="timestamp">
@@ -21,7 +21,7 @@
         </createTable>
 
         <createTable  tableName="changes">
-            <column  name="change_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="text" type="text">
@@ -43,11 +43,9 @@
                 baseTableName="changes"
                 baseTableSchemaName="public"
                 constraintName="fk_changes_task_dashboards"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_dashboard_id"
+                referencedColumnNames="id"
                 referencedTableName="task_dashboards"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -56,7 +54,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.2">
         <createTable tableName="labels">
-            <column  name="label_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="text" type="character varying(20)">
@@ -75,11 +73,9 @@
                 baseTableName="labels"
                 baseTableSchemaName="public"
                 constraintName="fk_labels_task_dashboards"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_dashboard_id"
+                referencedColumnNames="id"
                 referencedTableName="task_dashboards"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -88,7 +84,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.3">
         <createTable tableName="task_lists">
-            <column  name="task_list_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="name" type="character varying(50)">
@@ -104,11 +100,9 @@
                 baseTableName="task_lists"
                 baseTableSchemaName="public"
                 constraintName="fk_task_lists_task_dashboards"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_dashboard_id"
+                referencedColumnNames="id"
                 referencedTableName="task_dashboards"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -117,7 +111,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.4">
         <createTable tableName="task_dashboard_to_user_links">
-            <column  name="task_dashboard_to_user_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="user_id" type="bigint">
@@ -133,11 +127,9 @@
                 baseTableName="task_dashboard_to_user_links"
                 baseTableSchemaName="public"
                 constraintName="fk_task_dashboard_to_user_links_task_dashboards"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_dashboard_id"
+                referencedColumnNames="id"
                 referencedTableName="task_dashboards"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -146,7 +138,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.5">
         <createTable tableName="tasks">
-            <column  name="task_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="description" type="text">
@@ -171,11 +163,9 @@
                 baseTableName="tasks"
                 baseTableSchemaName="public"
                 constraintName="fk_task_task_lists"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_list_id"
+                referencedColumnNames="id"
                 referencedTableName="task_lists"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -184,7 +174,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.6">
         <createTable tableName="task_to_user_links">
-            <column  name="task_to_user_link_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="task_id" type="bigint">
@@ -200,11 +190,9 @@
                 baseTableName="task_to_user_links"
                 baseTableSchemaName="public"
                 constraintName="fk_task_to_user_links_tasks"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_id"
+                referencedColumnNames="id"
                 referencedTableName="tasks"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -213,7 +201,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.7">
         <createTable tableName="label_to_task_links">
-            <column  name="label_to_task_link_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="task_id" type="bigint">
@@ -229,11 +217,9 @@
                 baseTableName="label_to_task_links"
                 baseTableSchemaName="public"
                 constraintName="fk_label_to_task_links_tasks"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_id"
+                referencedColumnNames="id"
                 referencedTableName="tasks"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -244,11 +230,9 @@
                 baseTableName="label_to_task_links"
                 baseTableSchemaName="public"
                 constraintName="fk_label_to_task_links_labels"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="label_id"
+                referencedColumnNames="id"
                 referencedTableName="labels"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -257,7 +241,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.8">
         <createTable tableName="commentaries">
-            <column  name="commentary_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="task_id" type="bigint">
@@ -279,11 +263,9 @@
                 baseTableName="commentaries"
                 baseTableSchemaName="public"
                 constraintName="fk_commentaries_tasks"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_id"
+                referencedColumnNames="id"
                 referencedTableName="tasks"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -292,7 +274,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.9">
         <createTable tableName="checklists">
-            <column  name="checklist_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="task_id" type="bigint">
@@ -305,11 +287,9 @@
                 baseTableName="checklists"
                 baseTableSchemaName="public"
                 constraintName="fk_checklists_tasks"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_id"
+                referencedColumnNames="id"
                 referencedTableName="tasks"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -318,13 +298,19 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.10">
         <createTable tableName="task_attachments">
-            <column  name="task_attachment_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="task_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="link" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="header" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="timestamp">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -334,11 +320,9 @@
                 baseTableName="task_attachments"
                 baseTableSchemaName="public"
                 constraintName="fk_task_attachments_tasks"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="task_id"
+                referencedColumnNames="id"
                 referencedTableName="tasks"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -347,13 +331,19 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.11">
         <createTable tableName="commentary_attachments">
-            <column  name="commentary_attachment_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="commentary_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="link" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="header" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="timestamp">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -363,11 +353,9 @@
                 baseTableName="commentary_attachments"
                 baseTableSchemaName="public"
                 constraintName="fk_commentary_attachments_commentaries"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="commentary_id"
+                referencedColumnNames="id"
                 referencedTableName="commentaries"
                 referencedTableSchemaName="public"
                 validate="true"
@@ -376,7 +364,7 @@
 
     <changeSet author="Vladislav Marchenko"  id="db.changelog-1.0.12">
         <createTable tableName="checklist_items">
-            <column  name="checklist_item_id"  type="bigint"  autoIncrement="true">
+            <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column name="checklist_id" type="bigint">
@@ -395,47 +383,13 @@
                 baseTableName="checklist_items"
                 baseTableSchemaName="public"
                 constraintName="fk_checklist_items_checklists"
-                deferrable="true"
-                initiallyDeferred="true"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
-                referencedColumnNames="checklist_id"
+                referencedColumnNames="id"
                 referencedTableName="checklists"
                 referencedTableSchemaName="public"
                 validate="true"
         />
     </changeSet>
 
-    <changeSet author="Vladislav Marchenko" id="db.changelog-1.0.13">
-        <renameColumn
-                columnDataType="bigint"
-                newColumnName="creator_id"
-                oldColumnName="owner_id"
-                schemaName="public"
-                tableName="task_dashboards"
-        />
-    </changeSet>
-
-    <changeSet author="Vladislav Marchenko" id="db.changelog-1.0.14">
-
-        <addColumn schemaName= "public"
-                   tableName="commentary_attachments">
-            <column name="header" type="text">
-                <constraints nullable="true"/>
-            </column>
-            <column name="created_date" type="timestamp">
-                <constraints nullable="false"/>
-            </column>
-        </addColumn>
-
-        <addColumn schemaName= "public"
-                   tableName="task_attachments">
-            <column name="header" type="text">
-                <constraints nullable="true"/>
-            </column>
-            <column name="created_date" type="timestamp">
-                <constraints nullable="false"/>
-            </column>
-        </addColumn>
-    </changeSet>
 </databaseChangeLog>

@@ -1,5 +1,6 @@
 package com.companion.tasks.model.entity
 
+import com.companion.common.model.entity.AbstractEntity
 import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
@@ -8,20 +9,15 @@ import javax.persistence.*
  */
 @Entity
 @Table(name = "checklists")
-class ChecklistEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "checklist_id")
-    var checklistId : Long? = 0
+class ChecklistEntity(
+        @Column(name = "task_id", nullable = false)
+        var taskId : Long? = null,
 
-    @Column(name = "task_id", nullable = false)
-    var taskId : Long? = null
-
-    @OneToMany(
+        @OneToMany(
             mappedBy = "checklistId",
             fetch = FetchType.LAZY,
             cascade = [CascadeType.ALL]
-    )
-    @JsonIgnore
-    var checklistItemEntities : Set<ChecklistItemEntity> = setOf()
-}
+        )
+        @JsonIgnore
+        var checklistItemEntities : Set<ChecklistItemEntity> = setOf()
+) : AbstractEntity<Long>()

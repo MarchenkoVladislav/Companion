@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.orm.hibernate5.HibernateTransactionManager
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean
+import org.springframework.transaction.annotation.EnableTransactionManagement
 import java.util.*
 import javax.sql.DataSource
 
@@ -16,15 +17,16 @@ import javax.sql.DataSource
  * @author Vladislav Marchenko
  */
 @Configuration
+@EnableTransactionManagement
 class HibernateConfig {
     @Autowired
-    private val env: Environment? = null
+    private lateinit var env: Environment
 
     @Bean(name = ["dataSource"])
     fun getDataSource(): DataSource? {
         val dataSource = DriverManagerDataSource()
 
-        dataSource.setDriverClassName(env!!.getProperty("spring.datasource.driver-class-name")!!)
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name")!!)
         dataSource.url = env.getProperty("spring.datasource.url")
         dataSource.username = env.getProperty("spring.datasource.username")
         dataSource.password = env.getProperty("spring.datasource.password")
@@ -32,13 +34,12 @@ class HibernateConfig {
         return dataSource
     }
 
-    @Autowired
     @Bean(name = ["sessionFactory"])
     @Throws(Exception::class)
     fun getSessionFactory(dataSource: DataSource?): SessionFactory? {
         val properties = Properties()
 
-        properties["hibernate.dialect"] = env!!.getProperty("spring.jpa.properties.hibernate.dialect")
+        properties["hibernate.dialect"] = env.getProperty("spring.jpa.properties.hibernate.dialect")
         properties["hibernate.show_sql"] = env.getProperty("spring.jpa.show-sql")
         properties["current_session_context_class"] = env.getProperty("spring.jpa.properties.hibernate.current_session_context_class")
         properties["hibernate.temp.use_jdbc_metadata_defaults"] = false;
@@ -53,7 +54,6 @@ class HibernateConfig {
         return factoryBean.getObject()
     }
 
-    @Autowired
     @Bean(name = ["transactionManager"])
     fun getTransactionManager(sessionFactory: SessionFactory?): HibernateTransactionManager? {
         return HibernateTransactionManager(sessionFactory!!)
