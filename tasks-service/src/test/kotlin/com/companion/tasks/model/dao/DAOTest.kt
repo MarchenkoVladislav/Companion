@@ -28,7 +28,7 @@ internal class DAOTest {
     fun test() {
         val tde = TaskDashboardEntity("name", 1)
 
-        taskDashboardDAO.save(tde)
+        taskDashboardDAO.saveOrUpdate(tde)
 
         println(taskDashboardDAO.findAll())
     }
