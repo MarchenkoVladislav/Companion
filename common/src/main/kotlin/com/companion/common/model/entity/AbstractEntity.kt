@@ -7,9 +7,9 @@ import javax.persistence.*
  * @author Vladislav Marchenko
  */
 @MappedSuperclass
-abstract class AbstractEntity<T: Serializable> : Serializable {
+abstract class AbstractEntity<T : Serializable> : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id : T? = null
+    var id: T? = null
 }
