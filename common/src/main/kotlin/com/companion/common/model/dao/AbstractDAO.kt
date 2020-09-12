@@ -30,7 +30,7 @@ abstract class AbstractDAO<T: Serializable, ID>  {
 
     open fun delete(obj: T) : Unit? = sessionFactory.currentSession?.delete(obj)
 
-    open fun saveOrUpdate(obj: T) : T? = sessionFactory.currentSession?.saveOrUpdate(obj) as T?
+    open fun saveOrUpdate(obj: T) : Unit? = sessionFactory.currentSession?.saveOrUpdate(obj)
 
 }
 
