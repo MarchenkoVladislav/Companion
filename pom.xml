@@ -8,6 +8,8 @@
         <version>Hoxton.RELEASE</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <groupId>com</groupId>
     <artifactId>companion</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -21,5 +23,6 @@
     </properties>
 
     <modules>
+        <module>common</module>
     </modules>
 </project>
