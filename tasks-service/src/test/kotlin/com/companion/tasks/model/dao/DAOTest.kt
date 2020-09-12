@@ -1,6 +1,8 @@
 package com.companion.tasks.model.dao
 
 import com.companion.tasks.model.entity.TaskDashboardEntity
+import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
+import java.util.stream.LongStream
 import javax.transaction.Transactional
 
 @RunWith(SpringRunner::class)
@@ -20,16 +23,18 @@ import javax.transaction.Transactional
 @SpringBootTest
 internal class DAOTest {
 
+    private val entityCount = 10L
+
     @Autowired
     lateinit var taskDashboardDAO: TaskDashboardDAO
+
+    @Before
+    @Transactional
+    fun setUp() = LongStream.rangeClosed(1, entityCount).forEach{taskDashboardDAO.saveOrUpdate(TaskDashboardEntity("name$it", it))}
 
     @Test
     @Transactional
     fun test() {
-        val tde = TaskDashboardEntity("name", 1)
-
-        taskDashboardDAO.saveOrUpdate(tde)
-
-        println(taskDashboardDAO.findAll())
+        Assert.assertEquals(taskDashboardDAO.findAll().size.toLong(), entityCount)
     }
 }
